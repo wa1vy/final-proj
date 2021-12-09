@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 
 const Bookmark = () => {
-    let [iconClass, setIconClass] = useState('bi bi-bookmark')
+    const [iconClass, setIconClass] = useState('bi bi-bookmark')
 
     function handleChangeIcon() {
         if (iconClass === 'bi bi-bookmark') {
@@ -16,7 +16,7 @@ const Bookmark = () => {
         <div>
             <i onClick={handleChangeIcon} className={iconClass}></i>
         </div>
-    );
-};
+    )
+}
 
-export default Bookmark;
+export default Bookmark

@@ -1,12 +1,12 @@
-import React from 'react';
-import Users from "./components/users";
+import React from 'react'
+import Users from './components/users'
 
 const App = () => {
     return (
         <>
-            <Users/>
+            <Users />
         </>
-    );
-};
+    )
+}
 
-export default App;
+export default App
