@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import api from '../api/index'
 import SearchStatus from './searchStatus'
 import User from './user'
 import Pagination from './pagination'
-import {paginate} from '../utils/paginate'
+import { paginate } from '../utils/paginate'
 import GroupList from './groupList'
 import PropTypes from 'prop-types'
 /* eslint-disable */
@@ -11,6 +11,7 @@ const Users = () => {
     const [users, setUsers] = useState(api.users.fetchAll())
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfessions] = useState()
+
     const pageSize = 2
     const [selectedProf, setSelectedProf] = useState()
 
@@ -70,25 +71,25 @@ const Users = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
-                    <SearchStatus props={count}/>
+                    <SearchStatus props={count} />
                     {count > 0 && (
                         <table className="table">
                             <thead>
-                            <tr>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Качества</th>
-                                <th scope="col">Профессия</th>
-                                <th scope="col">Встретился, раз</th>
-                                <th scope="col">Оценка</th>
-                                <th scope="col">Избранное</th>
-                                <th scope="col"></th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Качества</th>
+                                    <th scope="col">Профессия</th>
+                                    <th scope="col">Встретился, раз</th>
+                                    <th scope="col">Оценка</th>
+                                    <th scope="col">Избранное</th>
+                                    <th scope="col"></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <User
-                                users={userCrop}
-                                onDelete={handleDelete}
-                            />
+                                <User
+                                    users={userCrop}
+                                    onDelete={handleDelete}
+                                />
                             </tbody>
                         </table>
                     )}
