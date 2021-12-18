@@ -5,15 +5,27 @@ import User from './user'
 import Pagination from './pagination'
 import { paginate } from '../utils/paginate'
 import GroupList from './groupList'
-import PropTypes from 'prop-types'
+
 /* eslint-disable */
 const Users = () => {
-    const [users, setUsers] = useState(api.users.fetchAll())
+    const [users, setUsers] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfessions] = useState()
 
     const pageSize = 2
     const [selectedProf, setSelectedProf] = useState()
+
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => setProfessions(data))
+    }, [])
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data))
+    }, [])
+
+    if (!users) {
+        return <h3>loading...</h3>
+    }
 
     const handleDelete = (userId) => {
         setUsers((prevState) => prevState.filter((user) => user._id !== userId))
@@ -28,17 +40,18 @@ const Users = () => {
 
     const count = filteredUsers.length
 
+    if (!count) {
+        return (
+            <>
+                <h3>No users left</h3>
+            </>
+        )
+    }
     const userCrop = paginate(filteredUsers, currentPage, pageSize)
 
     if (userCrop.length === 0) {
         handlePageChange(currentPage - 1)
     }
-
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            setProfessions(data)
-        })
-    }, [])
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item)
@@ -46,6 +59,7 @@ const Users = () => {
     const clearFilter = () => {
         setSelectedProf()
     }
+
     if (count < 1) {
         return (
             <span className="badge bg-danger m-2">
