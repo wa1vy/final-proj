@@ -42,11 +42,6 @@ const Users = () => {
         handlePageChange(currentPage - 1)
     }
 
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            setProfessions(data)
-        })
-    }, [])
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item)
