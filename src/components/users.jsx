@@ -5,7 +5,7 @@ import User from './user'
 import Pagination from './pagination'
 import { paginate } from '../utils/paginate'
 import GroupList from './groupList'
-import PropTypes from 'prop-types'
+
 /* eslint-disable */
 const Users = () => {
     const [users, setUsers] = useState()
@@ -23,8 +23,11 @@ const Users = () => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
 
+   if(!users){
+       return <h3>loading...</h3>
+   }
     const handleDelete = (userId) => {
-        setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId))
+        setUsers((prevState) => prevState.filter((user) => user._id !== userId))
     }
 
     const handlePageChange = (pageIndex) => {
@@ -49,12 +52,6 @@ const Users = () => {
     const clearFilter = () => {
         setSelectedProf()
     }
-
-    if (!count) return (
-        <>
-            <div>no</div>
-        </>
-    );
 
     if (count < 1) {
         return (
