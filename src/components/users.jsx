@@ -8,15 +8,23 @@ import GroupList from './groupList'
 import PropTypes from 'prop-types'
 /* eslint-disable */
 const Users = () => {
-    const [users, setUsers] = useState(api.users.fetchAll())
+    const [users, setUsers] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfessions] = useState()
 
     const pageSize = 2
     const [selectedProf, setSelectedProf] = useState()
 
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => setProfessions(data));
+    }, []);
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
+
     const handleDelete = (userId) => {
-        setUsers((prevState) => prevState.filter((user) => user._id !== userId))
+        setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId))
     }
 
     const handlePageChange = (pageIndex) => {
@@ -46,6 +54,13 @@ const Users = () => {
     const clearFilter = () => {
         setSelectedProf()
     }
+
+    if (!count) return (
+        <>
+            <div>no</div>
+        </>
+    );
+
     if (count < 1) {
         return (
             <span className="badge bg-danger m-2">
@@ -75,21 +90,21 @@ const Users = () => {
                     {count > 0 && (
                         <table className="table">
                             <thead>
-                                <tr>
-                                    <th scope="col">Имя</th>
-                                    <th scope="col">Качества</th>
-                                    <th scope="col">Профессия</th>
-                                    <th scope="col">Встретился, раз</th>
-                                    <th scope="col">Оценка</th>
-                                    <th scope="col">Избранное</th>
-                                    <th scope="col"></th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Качества</th>
+                                <th scope="col">Профессия</th>
+                                <th scope="col">Встретился, раз</th>
+                                <th scope="col">Оценка</th>
+                                <th scope="col">Избранное</th>
+                                <th scope="col"></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <User
-                                    users={userCrop}
-                                    onDelete={handleDelete}
-                                />
+                            <User
+                                users={userCrop}
+                                onDelete={handleDelete}
+                            />
                             </tbody>
                         </table>
                     )}
